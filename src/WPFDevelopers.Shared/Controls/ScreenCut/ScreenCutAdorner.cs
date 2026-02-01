@@ -157,6 +157,10 @@ namespace WPFDevelopers.Controls
 
                 double canvasWidth = canvas.ActualWidth;
                 double canvasHeight = canvas.ActualHeight;
+                bool isRightBottomCorner = _isRatioScale 
+                && 
+                thumb.HorizontalAlignment == HorizontalAlignment.Right &&
+                thumb.VerticalAlignment == VerticalAlignment.Bottom;
 
                 switch (thumb.VerticalAlignment)
                 {
@@ -189,6 +193,11 @@ namespace WPFDevelopers.Controls
 
                             if (_isRatioScale)
                                 ScaleWidth(thumb, element, newHeight);
+                            if (isRightBottomCorner)
+                            {
+                                e.Handled = true;
+                                return;
+                            }
                         }
                         break;
                 }

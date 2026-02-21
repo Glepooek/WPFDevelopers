@@ -26,6 +26,7 @@ namespace WPFDevelopers.Controls
     [TemplatePart(Name = PART_DropDownPanel, Type = typeof(Panel))]
     [TemplatePart(Name = ListViewTemplateNameSearch, Type = typeof(DataGrid))]
     [TemplatePart(Name = DropDownScrollViewer, Type = typeof(ScrollViewer))]
+    [TemplatePart(Name = PART_Border, Type = typeof(Border))]
 
     public class MultiSelectComboBox : ListView
     {
@@ -36,6 +37,9 @@ namespace WPFDevelopers.Controls
         private const string PART_DropDownPanel = "PART_DropDown";
         private const string ListViewTemplateNameSearch = "PART_SearchSelector";
         private const string DropDownScrollViewer = "DropDownScrollViewer";
+        private const string PART_Border = "PART_Border";
+
+        public static readonly RoutedCommand ToggleDropDownCommand = new RoutedCommand();
 
         public static readonly DependencyProperty IsDropDownOpenProperty =
             DependencyProperty.Register("IsDropDownOpen", typeof(bool), typeof(MultiSelectComboBox),
@@ -95,6 +99,7 @@ namespace WPFDevelopers.Controls
         private Panel _panelDropDown;
         private ScrollViewer _scrollViewer;
         private CheckBox _checkBox;
+        private Border _border;
         private string _theLastText;
         private bool _isUpdating;
 
@@ -353,8 +358,19 @@ namespace WPFDevelopers.Controls
             }
             SyncListViewViews();
             Loaded += OnMultiSelectComboBox_Loaded;
+            _border = GetTemplateChild(PART_Border) as Border;
+            if(_border != null)
+                _border.MouseUp += OnBorder_MouseUp;
+
+        }
+      
+        private void OnBorder_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsDropDownOpen = !IsDropDownOpen;
+            e.Handled = true;
         }
 
+       
         private void OnMultiSelectComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateText();

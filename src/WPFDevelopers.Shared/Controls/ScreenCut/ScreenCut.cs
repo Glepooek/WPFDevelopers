@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -202,7 +203,6 @@ namespace WPFDevelopers.Controls
         private Path _currentStrokeContainer = null;
         private List<Rectangle> _currentStrokeRectangles = new List<Rectangle>();
         private Stack<UIElement> _strokeHistory = new Stack<UIElement>();
-
         private static readonly HashSet<string> PermanentElementNames = new HashSet<string>
         {
             "PART_LeftRectangle",
@@ -215,6 +215,10 @@ namespace WPFDevelopers.Controls
             "PART_ColorPanelWrap",
             "PART_BorderPopup"
         };
+        private Point? _lastInkPoint = null;
+        private List<Point> _inkPoints = new List<Point>();
+        private const double MIN_DISTANCE = 2.0;
+        private const double SMOOTH_FACTOR = 0.3;
 
         public ScreenCut(int index)
         {
@@ -237,13 +241,21 @@ namespace WPFDevelopers.Controls
         public void Dispose()
         {
             _canvas.Background = null;
-            GC.SuppressFinalize(this);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             GC.Collect();
         }
+
         public static void ClearCaptureScreenID()
         {
             CaptureScreenID = -1;
         }
+        
+        ~ScreenCut()
+        {
+            Debug.WriteLine("~ScreenCut");
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -298,7 +310,17 @@ namespace WPFDevelopers.Controls
                 _wrapPanel.PreviewMouseDown += WrapPanel_PreviewMouseDown;
             Loaded += ScreenCut_Loaded;
             _controlTemplate = (ControlTemplate)FindResource("WD.PART_DrawArrow");
-            _canvas.Background = new ImageBrush(ImagingHelper.CreateBitmapSourceFromBitmap(CopyScreen()));
+            _screenCapture = CopyScreen();
+            using (var tempBitmap = _screenCapture)
+            {
+                var imageSource = ImagingHelper.CreateBitmapSourceFromBitmap(tempBitmap);
+                imageSource.Freeze();
+                var writeableBitmap = new WriteableBitmap(imageSource);
+                writeableBitmap.Freeze(); 
+                _canvas.Background = new ImageBrush(writeableBitmap);
+            }
+            _screenCapture?.Dispose();
+            _screenCapture = null;
             TakeSnapshot();
         }
 
@@ -310,6 +332,22 @@ namespace WPFDevelopers.Controls
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
+            if (_adornerLayer != null && _screenCutAdorner != null)
+            {
+                _adornerLayer.Remove(_screenCutAdorner);
+                _screenCutAdorner = null;
+                _adornerLayer = null;
+            }
+            if (_canvas != null)
+            {
+                if (_canvas.Background is ImageBrush brush)
+                {
+                    brush.ImageSource = null;
+                }
+                _canvas.Background = null;
+                _canvas.Children.Clear();
+            }
+            _imageSnapshot = null;
             Dispose();
         }
        
@@ -766,6 +804,7 @@ namespace WPFDevelopers.Controls
                 96, 96, PixelFormats.Pbgra32);
 
             _imageSnapshot.Render(_canvas);
+            _imageSnapshot.Freeze();
         }
 
         private void DrawMosaicBlock(Point center, int blockSize, int brushSize)
@@ -960,20 +999,15 @@ namespace WPFDevelopers.Controls
         private void DrwaInkControl(Point current)
         {
             CheckPoint(current);
-            if (current.X >= _rect.Left
-                &&
-                current.X <= _rect.Right
-                &&
-                current.Y >= _rect.Top
-                &&
-                current.Y <= _rect.Bottom)
+            if (current.X >= _rect.Left && current.X <= _rect.Right &&
+                current.Y >= _rect.Top && current.Y <= _rect.Bottom)
             {
                 if (_polyLine == null)
                 {
                     _polyLine = new Polyline();
                     _polyLine.Stroke = _currentBrush == null ? Brushes.Red : _currentBrush;
                     _polyLine.Cursor = Cursors.Hand;
-                    _polyLine.StrokeThickness = 3;
+                    _polyLine.StrokeThickness = 5;
                     _polyLine.StrokeLineJoin = PenLineJoin.Round;
                     _polyLine.StrokeStartLineCap = PenLineCap.Round;
                     _polyLine.StrokeEndLineCap = PenLineCap.Round;
@@ -987,10 +1021,63 @@ namespace WPFDevelopers.Controls
                     };
                     _canvas.Children.Add(_polyLine);
                     SetUndoEnabled();
+                    _inkPoints.Clear();
+                    _inkPoints.Add(current);
+                    _polyLine.Points.Add(current);
+                    _lastInkPoint = current;
+                    return;
                 }
 
-                _polyLine.Points.Add(current);
+                var distance = Point.Subtract(current, _lastInkPoint.Value).Length;
+
+                if (distance < MIN_DISTANCE)
+                    return;
+
+                _inkPoints.Add(current);
+                if (_inkPoints.Count >= 3)
+                {
+                    int iterations = (int)(SMOOTH_FACTOR * 3);
+                    iterations = Math.Max(1, Math.Min(3, iterations));
+                    var smoothedPoints = ChaikinSmooth(_inkPoints, 1);
+                    _polyLine.Points.Clear();
+                    foreach (var point in smoothedPoints)
+                    {
+                        _polyLine.Points.Add(point);
+                    }
+                }
+                else
+                {
+                    _polyLine.Points.Add(current);
+                }
+                _lastInkPoint = current;
             }
+        }
+
+        private List<Point> ChaikinSmooth(List<Point> points, int iterations)
+        {
+            if (points.Count < 3)
+                return new List<Point>(points);
+
+            var currentPoints = new List<Point>(points);
+
+            for (int iter = 0; iter < iterations; iter++)
+            {
+                var newPoints = new List<Point>();
+
+                newPoints.Add(currentPoints[0]);
+                for (int i = 0; i < currentPoints.Count - 1; i++)
+                {
+                    var p0 = currentPoints[i];
+                    var p1 = currentPoints[i + 1];
+                    var q = new Point(0.75 * p0.X + 0.25 * p1.X, 0.75 * p0.Y + 0.25 * p1.Y);
+                    var r = new Point(0.25 * p0.X + 0.75 * p1.X, 0.25 * p0.Y + 0.75 * p1.Y);
+                    newPoints.Add(q);
+                    newPoints.Add(r);
+                }
+                newPoints.Add(currentPoints[currentPoints.Count - 1]);
+                currentPoints = newPoints;
+            }
+            return currentPoints;
         }
 
         private void DrawArrowControl(Point current)
@@ -1293,11 +1380,19 @@ namespace WPFDevelopers.Controls
             _isMouseUp = true;
             if (_screenCutMouseType != ScreenCutMouseType.Default)
             {
-                if (_screenCutMouseType == ScreenCutMouseType.MoveMouse)
-                    EditBarPosition();
-                else if(_screenCutMouseType == ScreenCutMouseType.DrawMosaic)
+                switch (_screenCutMouseType)
                 {
-                    CompleteCurrentStroke();
+                    case ScreenCutMouseType.MoveMouse:
+                        EditBarPosition();
+                        break;
+                    case ScreenCutMouseType.DrawMosaic:
+                        CompleteCurrentStroke();
+                        break;
+                    case ScreenCutMouseType.DrawInk:
+                        _lastInkPoint = null;
+                        _inkPoints.Clear();
+                        _polyLine = null;
+                        break;
                 }
 
                 if (_rectangleRadioButton.IsChecked != true

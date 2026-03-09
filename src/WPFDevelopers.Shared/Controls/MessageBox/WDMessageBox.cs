@@ -59,6 +59,16 @@ namespace WPFDevelopers.Controls
             DependencyProperty.Register("ButtonCornerRadius", typeof(CornerRadius), typeof(WDMessageBox), new PropertyMetadata(null));
 
 
+        public bool IsDefault
+        {
+            get { return (bool)GetValue(IsDefaultProperty); }
+            set { SetValue(IsDefaultProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsDefaultProperty =
+            DependencyProperty.Register("IsDefault", typeof(bool), typeof(WDMessageBox), new PropertyMetadata(true));
+
+
         static WDMessageBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WDMessageBox),

@@ -8,7 +8,7 @@
         <img alt="nuget-version" src="https://img.shields.io/nuget/vpre/WPFDevelopers"></img>
     </a>  [![Github stars](https://img.shields.io/github/stars/yanjinhuagood/WPFDevelopers)](https://github.com/yanjinhuagood/WPFDevelopers/stargazers)	 ![Downloads](https://img.shields.io/nuget/dt/WPFDevelopers?color=%23409EF)  <a href="resources/WPFDevelopersResource/WPFDevelopers.vsix">
         <img alt=".NET6VSIX" src="https://img.shields.io/badge/.NET6-VSIX-ff69b4"></img>
-    </a>  
+    </a>  ![star](https://atomgit.com/WPFDevelopersOrg/WPFDevelopers/star/badge.svg)
 
 
 

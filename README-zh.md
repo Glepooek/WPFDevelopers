@@ -24,6 +24,8 @@
 
 ### [码云](https://gitee.com/WPFDevelopersOrg) https://gitee.com/WPFDevelopersOrg  
 
+### [GitCode](https://atomgit.com/WPFDevelopersOrg/WPFDevelopers) https://atomgit.com/WPFDevelopersOrg/WPFDevelopers  
+
 ### [ Wiki→ 正在进行快速更新](https://gitee.com/WPFDevelopersOrg/WPFDevelopers/wikis/pages)   
 
 ### 此项目包含了 微信公众号 《 WPF开发者》 日常开发分享，欢迎<kbd>Star</kbd>。   

@@ -71,7 +71,6 @@
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter Property="Background" Value="{DynamicResource WD.BaseBrush}" />
-                                <Setter TargetName="PART_Border" Property="TextElement.FontWeight" Value="Bold" />
                                 <Setter TargetName="PART_Border" Property="TextElement.Foreground" Value="{DynamicResource WD.PrimaryBrush}" />
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
@@ -160,7 +159,8 @@
 
                             <TextBlock
                                 x:Name="PART_Watermark"
-                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding Padding}"
+                                Padding="1,0"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Background="Transparent"

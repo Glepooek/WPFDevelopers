@@ -6,6 +6,7 @@ using System.Windows.Shell;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -57,6 +58,16 @@ namespace WPFDevelopers.Controls
 
         public static readonly DependencyProperty ButtonRadiusProperty =
             DependencyProperty.Register("ButtonCornerRadius", typeof(CornerRadius), typeof(WDMessageBox), new PropertyMetadata(null));
+
+
+        public bool IsDefault
+        {
+            get { return (bool)GetValue(IsDefaultProperty); }
+            set { SetValue(IsDefaultProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsDefaultProperty =
+            DependencyProperty.Register("IsDefault", typeof(bool), typeof(WDMessageBox), new PropertyMetadata(true));
 
 
         static WDMessageBox()
@@ -211,6 +222,16 @@ namespace WPFDevelopers.Controls
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Key == Key.Escape)
+            {
+                Close();
+                e.Handled = true;
+            }
         }
 
         private void DisplayButtons(MessageBoxButton button)

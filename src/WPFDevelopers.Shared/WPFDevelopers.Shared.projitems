@@ -62,6 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PathIcon\PackIconKind.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PathIcon\PathIcon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\BreadCrumbBarConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\ButtonPositionToColumnConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\ColorConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\ColorTypeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\CornerRadiusToSurroundConverter.cs" />

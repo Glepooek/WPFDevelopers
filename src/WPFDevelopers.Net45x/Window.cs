@@ -68,6 +68,15 @@ namespace WPFDevelopers.Net45x
                 UseAeroCaptionButtons = false
             };
             System.Windows.Shell.WindowChrome.SetWindowChrome(this, _windowChrome);
+            StateChanged += OnWindow_StateChanged;
+        }
+
+        private void OnWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                _windowChrome.GlassFrameThickness = new Thickness(0);
+            else
+                _windowChrome.GlassFrameThickness = new Thickness(0, 0, 0, 0.1);
         }
 
         private void Resources_ThemeChanged(ThemeType currentTheme)

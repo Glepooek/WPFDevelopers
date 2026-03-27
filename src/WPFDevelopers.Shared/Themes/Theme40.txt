@@ -59,7 +59,7 @@ MultiSelectComboBox.xaml
 Mask.xaml
 BreadCrumbBar.xaml
 CropImage.xaml
-Message.xaml
+Toast.xaml
 PathIcon.xaml
 NumericBox.xaml
 ColorPicker.xaml

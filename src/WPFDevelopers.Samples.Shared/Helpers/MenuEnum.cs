@@ -77,7 +77,7 @@
         BreadCrumbBar,
         CropImage,
         Badge,
-        Message,
+        Toast,
         PathIcon,
         NumericBox,
         ColorPicker,

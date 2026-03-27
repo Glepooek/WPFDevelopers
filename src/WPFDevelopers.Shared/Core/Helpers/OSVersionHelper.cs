@@ -87,6 +87,12 @@ namespace WPFDevelopers.Core.Helpers
             return 0;
         }
 
+        public static bool IsWindows8OrLater()
+        {
+            return Environment.OSVersion.Version.Major >= 6 &&
+                   Environment.OSVersion.Version.Minor >= 3;
+        }
+
         #region SnapLayout
 
         private const double DPI_SCALE = 1.5;

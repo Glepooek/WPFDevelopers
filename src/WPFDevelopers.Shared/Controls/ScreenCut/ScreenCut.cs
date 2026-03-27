@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPFDevelopers.Core.Helpers;
 using WPFDevelopers.Helpers;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
@@ -35,6 +36,12 @@ namespace WPFDevelopers.Controls
     {
         public static void GetDpi(this Screen screen, DpiType dpiType, out uint dpiX, out uint dpiY)
         {
+            if (!OSVersionHelper.IsWindows8OrLater())
+            {
+                dpiX = 96;
+                dpiY = 96;
+                return;
+            }
             var pnt = new System.Drawing.Point(screen.Bounds.Left + 1, screen.Bounds.Top + 1);
             var mon = MonitorFromPoint(pnt, 2);
             GetDpiForMonitor(mon, dpiType, out dpiX, out dpiY);

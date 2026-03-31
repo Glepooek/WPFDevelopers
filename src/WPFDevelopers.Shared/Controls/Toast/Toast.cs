@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Windows;
 using WPFDevelopers.Helpers;
 
@@ -10,6 +11,38 @@ namespace WPFDevelopers.Controls
         private static readonly ConcurrentDictionary<Window, ToastAdorner> _windowAdorners = new ConcurrentDictionary<Window, ToastAdorner>();
         private static ToastExt _toastExt;
         private static Position _position = Position.Top;
+        private static bool _isExitHandlerRegistered = false;
+
+        static Toast()
+        {
+            RegisterAppExitHandler();
+        }
+
+        private static void RegisterAppExitHandler()
+        {
+            if (_isExitHandlerRegistered)
+                return;
+
+            try
+            {
+                if (Application.Current != null)
+                {
+                    Application.Current.Exit += (s, e) => CleanupAll();
+                    _isExitHandlerRegistered = true;
+                }
+                else if (System.Windows.Forms.Application.MessageLoop)
+                {
+                    System.Windows.Forms.Application.ApplicationExit += (s, e) => CleanupAll();
+                    _isExitHandlerRegistered = true;
+                }
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine($"RegisterAppExitHandler failed: {ex.Message}");
+#endif
+            }
+        }
 
         static void CreateToastAdorner(Window owner = null, string message = null, ToastImage type = ToastImage.Info, bool center = false)
         {
@@ -35,9 +68,11 @@ namespace WPFDevelopers.Controls
                 if (!string.IsNullOrWhiteSpace(message))
                     ToastAdorner.Push(message, type, center);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine($"CreateToastAdorner failed: {ex.Message}");
+#endif
             }
         }
 
@@ -51,6 +86,11 @@ namespace WPFDevelopers.Controls
                 {
                     adorner.Clear();
                 }
+            }
+            var normalWindowCount = Application.Current.Windows.Cast<Window>().Count(w => w != null && !(w is ToastExt));
+            if (normalWindowCount <= 1)
+            {
+                CleanupAll();
             }
         }
 
@@ -100,10 +140,39 @@ namespace WPFDevelopers.Controls
             if (owner != null && _windowAdorners.ContainsKey(owner))
                 _windowAdorners[owner].Clear();
         }
+
         public static void ClearDesktop()
         {
             if (_toastExt != null)
                 _toastExt.Clear();
+        }
+
+        public static void ClearAll()
+        {
+            CleanupAll();
+        }
+
+        private static void CleanupAll()
+        {
+            try
+            {
+                foreach (var kvp in _windowAdorners)
+                {
+                    kvp.Value?.Clear();
+                }
+                _windowAdorners.Clear();
+                if (_toastExt != null)
+                {
+                    _toastExt.Clear();
+                    _toastExt = null;
+                }
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                System.Diagnostics.Debug.WriteLine($"CleanupAll failed: {ex.Message}");
+#endif
+            }
         }
     }
     public enum ToastImage

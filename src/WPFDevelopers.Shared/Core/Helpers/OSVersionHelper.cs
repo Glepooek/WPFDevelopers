@@ -93,6 +93,20 @@ namespace WPFDevelopers.Core.Helpers
                    Environment.OSVersion.Version.Minor >= 3;
         }
 
+        public static bool IsWindows10OrLater()
+        {
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
+            {
+                object value = key?.GetValue("CurrentMajorVersionNumber");
+                if (value != null && int.TryParse(value.ToString(), out int majorVersion))
+                {
+                    return majorVersion >= 10;
+                }
+            }
+            Version version = Environment.OSVersion.Version;
+            return version.Major >= 10;
+        }
+
         #region SnapLayout
 
         private const double DPI_SCALE = 1.5;

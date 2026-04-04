@@ -71,3 +71,4 @@ Tag.xaml
 NavScrollPanel.xaml
 GestureUnlock.xaml
 WDUserControl.xaml
+Filter.xaml

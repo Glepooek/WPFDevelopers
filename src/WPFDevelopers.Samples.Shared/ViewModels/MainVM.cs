@@ -403,6 +403,9 @@ namespace WPFDevelopers.Samples.ViewModels
                 case MenuEnum.SvgViewer:
                     ControlPanel = new SvgViewerExample();
                     break;
+                case MenuEnum.DataGridFilter:
+                    ControlPanel = new DataGridFilterExample();
+                    break;
                 case MenuEnum.VirtualizingWrapPanel:
                     ControlPanel = new VirtualizingWrapPanel();
                     new VirtualizingWrapPanelExample().MaskShowDialog();

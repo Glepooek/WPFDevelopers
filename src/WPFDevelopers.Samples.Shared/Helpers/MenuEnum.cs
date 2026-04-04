@@ -99,6 +99,7 @@
         AllPathIcon,
         Dial,
         SvgViewer,
+        DataGridFilter,
         VirtualizingWrapPanel,
         AcrylicBlur,
         TaskbarInfo

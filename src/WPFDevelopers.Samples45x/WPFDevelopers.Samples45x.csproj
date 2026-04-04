@@ -2,8 +2,6 @@
 	<Import Project="../Resources.props" />
 	<Import Project="../TargetFrameworks.props" />
 	<ItemGroup>
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\WPFDevelopers.Net45x\WPFDevelopers.Net45x.csproj" />
 		<ProjectReference Include="..\WPFDevelopers.SamplesCode\WPFDevelopers.SamplesCode.csproj" />
 	</ItemGroup>

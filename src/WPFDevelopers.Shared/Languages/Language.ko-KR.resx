@@ -195,4 +195,10 @@
   <data name="Undo" xml:space="preserve">
     <value>되돌리기(Ctrl+Z)</value>
   </data>
+  <data name="InputWatermark" xml:space="preserve">
+    <value>내용을 입력하세요</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>응용</value>
+  </data>
 </root>

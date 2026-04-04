@@ -67,7 +67,7 @@
                                         x:Name="PART_Path"
                                         Width="25"
                                         Height="25"
-                                        Data="{StaticResource WD.InformationGeometry}"
+                                        Data="{StaticResource WD.SuccessGeometry}"
                                         Fill="{DynamicResource WD.PrimaryBrush}"
                                         Stretch="Fill" />
                                     <TextBox

@@ -87,12 +87,6 @@ namespace WPFDevelopers.Core.Helpers
             return 0;
         }
 
-        public static bool IsWindows8OrLater()
-        {
-            return Environment.OSVersion.Version.Major >= 6 &&
-                   Environment.OSVersion.Version.Minor >= 3;
-        }
-
         public static bool IsWindows10OrLater()
         {
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))

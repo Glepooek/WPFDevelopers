@@ -47,7 +47,7 @@ namespace WPFDevelopers.Controls
 
         public static bool CanUsePerMonitorDpi()
         {
-            IntPtr hModule = Win32.LoadLibrary("shcore.dll");
+            IntPtr hModule = Win32.LoadLibrary(Win32.Shcore);
             if (hModule == IntPtr.Zero)
                 return false;
             IntPtr procAddr = Win32.GetProcAddress(hModule, "GetDpiForMonitor");

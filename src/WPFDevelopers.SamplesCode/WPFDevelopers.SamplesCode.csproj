@@ -142,7 +142,7 @@
 		<Resource Include="..\WPFDevelopers.Samples.Shared\Controls\CropControl\CropControl.cs" Link="Controls\CropControl\CropControl.cs" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\CropImageExample.xaml.cs" Link="ExampleViews\CropImageExample.xaml.cs" DependentUpon="CropImageExample.xaml" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\BadgeExample.xaml.cs" Link="ExampleViews\BadgeExample.xaml.cs" DependentUpon="BadgeExample.xaml" />
-		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\MessageExample.xaml.cs" Link="ExampleViews\MessageExample.xaml.cs" DependentUpon="MessageExample.xaml" />
+		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\ToastExample.xaml.cs" Link="ExampleViews\ToastExample.xaml.cs" DependentUpon="ToastExample.xaml" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\Window\NoneTitleBarWindow.xaml.cs" Link="ExampleViews\Window\NoneTitleBarWindow.xaml.cs" DependentUpon="NoneTitleBarWindow.xaml" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\Window\ToolWindow.xaml.cs" Link="ExampleViews\Window\ToolWindow.xaml.cs" DependentUpon="ToolWindow.xaml" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\PathIconExample.xaml.cs" Link="ExampleViews\PathIconExample.xaml.cs" DependentUpon="PathIconExample.xaml" />
@@ -175,6 +175,7 @@
 		<Resource Include="..\WPFDevelopers.Samples.Shared\Controls\MultiSelectionSearchComboBox\MultiSelectSearchComboBox.cs" Link="Controls\MultiSelectionSearchComboBox\MultiSelectSearchComboBox.cs" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\DialExample.xaml.cs" Link="ExampleViews\DialExample.xaml.cs" DependentUpon="DialExample.xaml" />
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\SvgViewerExample.xaml.cs" Link="ExampleViews\SvgViewerExample.xaml.cs" DependentUpon="SvgViewerExample.xaml" />
+		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\DataGridFilterExample.xaml.cs" Link="ExampleViews\DataGridFilterExample.xaml.cs" DependentUpon="DataGridFilterExample.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\AboutWindow.xaml">
@@ -489,8 +490,8 @@
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\BadgeExample.xaml">
 			<Link>ExampleViews\BadgeExample.xaml</Link>
 		</Resource>
-		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\MessageExample.xaml">
-			<Link>ExampleViews\MessageExample.xaml</Link>
+		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\ToastExample.xaml">
+			<Link>ExampleViews\ToastExample.xaml</Link>
 		</Resource>
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\Window\NoneTitleBarWindow.xaml">
 			<Link>ExampleViews\Window\NoneTitleBarWindow.xaml</Link>
@@ -575,6 +576,9 @@
 		</Resource>
 		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\SvgViewerExample.xaml">
 			<Link>ExampleViews\SvgViewerExample.xaml</Link>
+		</Resource>
+		<Resource Include="..\WPFDevelopers.Samples.Shared\ExampleViews\DataGridFilterExample.xaml">
+			<Link>ExampleViews\DataGridFilterExample.xaml</Link>
 		</Resource>
 	</ItemGroup>
 </Project>

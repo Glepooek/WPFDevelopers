@@ -25,6 +25,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DateRangePicker\DateRangePicker.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Dial\Dial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Drawer\Drawer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Filter\DistinctHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Filter\Filter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Filter\FilterCondition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Filter\FilterEngine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Filter\FilterItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Filter\PropertyAccessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Gauge\Gauge.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\GestureUnlock\GestureItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\GestureUnlock\GestureUnlock.cs" />
@@ -32,7 +38,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Loadings\LoadingBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Loading\LoadingExt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Loading\ProgressLoading.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Message\MessageExt.cs" />
+    <Compile Include="..\WPFDevelopers.Shared\Controls\Toast\ToastExt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\MultiSelectComboBox\MultiSelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NavScrollPanel\NavScrollPanel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NavScrollPanel\NavScrollPanelItem.cs" />
@@ -54,14 +60,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BreadCrumbBar\BreadCrumbBar.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BreadCrumbBar\BreadCrumbBarItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\CropImage\CropImage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Message\Message.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Message\MessageAdorner.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Message\MessageListBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\Message\MessageListBoxItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\Toast\Toast.cs" />
+    <Compile Include="..\WPFDevelopers.Shared\Controls\Toast\ToastAdorner.cs" />
+    <Compile Include="..\WPFDevelopers.Shared\Controls\Toast\ToastListBox.cs" />
+    <Compile Include="..\WPFDevelopers.Shared\Controls\Toast\ToastListBoxItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\NumericBox\NumericBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PathIcon\PackIconKind.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\PathIcon\PathIcon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\BreadCrumbBarConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\ButtonPositionToColumnConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\ColorConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\ColorTypeToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\CornerRadiusToSurroundConverter.cs" />
@@ -71,6 +78,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\MultiBoolToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\NullToVisibilityConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Converts\DirectionalThicknessConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Helpers\DataGridHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Helpers\OSVersionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Helpers\SelectorHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Helpers\TreeViewHelper.cs" />
@@ -411,6 +419,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Themes\Filter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)Themes\NavMenu3D.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -495,7 +507,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="$(MSBuildThisFileDirectory)Themes\Message.xaml">
+    <Page Include="$(MSBuildThisFileDirectory)Themes\Toast.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

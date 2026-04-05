@@ -209,6 +209,15 @@ namespace WPFDevelopers.Helpers
             public int Right;
             public int Bottom;
         }
+
+        [DllImport(Kernel32)]
+        public static extern IntPtr LoadLibrary(string lpFileName);
+
+        [DllImport(Kernel32)]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+        [DllImport(Kernel32)]
+        public static extern bool FreeLibrary(IntPtr hModule);
     }
 
     internal class WindowsMessageCodes

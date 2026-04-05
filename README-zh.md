@@ -22,9 +22,9 @@
 
 ### [Github](https://github.com/WPFDevelopersOrg) https://github.com/WPFDevelopersOrg  
 
-### [码云](https://gitee.com/WPFDevelopersOrg) https://gitee.com/WPFDevelopersOrg  
+### [Gitee](https://gitee.com/WPFDevelopersOrg) https://gitee.com/WPFDevelopersOrg  
 
-### [GitCode](https://atomgit.com/WPFDevelopersOrg/WPFDevelopers) https://atomgit.com/WPFDevelopersOrg/WPFDevelopers  
+### [AtomGit](https://atomgit.com/WPFDevelopersOrg/WPFDevelopers) https://atomgit.com/WPFDevelopersOrg/WPFDevelopers  
 
 ### [ Wiki→ 正在进行快速更新](https://gitee.com/WPFDevelopersOrg/WPFDevelopers/wikis/pages)   
 

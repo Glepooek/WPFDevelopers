@@ -36,16 +36,25 @@ namespace WPFDevelopers.Controls
     {
         public static void GetDpi(this Screen screen, DpiType dpiType, out uint dpiX, out uint dpiY)
         {
-            if (!OSVersionHelper.IsWindows8OrLater())
-            {
-                dpiX = 96;
-                dpiY = 96;
+            dpiX = 96;
+            dpiY = 96;
+            if (!CanUsePerMonitorDpi())
                 return;
-            }
             var pnt = new System.Drawing.Point(screen.Bounds.Left + 1, screen.Bounds.Top + 1);
             var mon = MonitorFromPoint(pnt, 2);
             GetDpiForMonitor(mon, dpiType, out dpiX, out dpiY);
         }
+
+        public static bool CanUsePerMonitorDpi()
+        {
+            IntPtr hModule = Win32.LoadLibrary(Win32.Shcore);
+            if (hModule == IntPtr.Zero)
+                return false;
+            IntPtr procAddr = Win32.GetProcAddress(hModule, "GetDpiForMonitor");
+            Win32.FreeLibrary(hModule);
+            return procAddr != IntPtr.Zero;
+        }
+
         [DllImport(Win32.User32)]
         private static extern IntPtr MonitorFromPoint([In] System.Drawing.Point pt, [In] uint dwFlags);
         [DllImport(Win32.Shcore)]

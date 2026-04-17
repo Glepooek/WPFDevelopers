@@ -219,6 +219,7 @@ namespace WPFDevelopers.Helpers
         public const int WM_DEADCHAR = 0x0024;
         public const int WM_NCLBUTTONDOWN = 0x00A1;
         public const int WM_NCHITTEST = 0x0084;
+        public const int WM_NCCALCSIZE = 0x0083;
 
         public const int WM_DWMSENDICONICTHUMBNAIL = 0x0323;
         public const int WM_DWMSENDICONICLIVEPREVIEWBITMAP = 0x0326;

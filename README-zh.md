@@ -30,7 +30,7 @@
 
 ### 此项目包含了 微信公众号 《 WPF开发者》 日常开发分享，欢迎<kbd>Star</kbd>。   
 
-### 运行环境 Visual Studio 2022  
+### 运行环境 Visual Studio Insiders  
 
 ### .Net Version
 |  .Net Version   | Status  |
@@ -54,6 +54,7 @@
 | net7.0-windows  | ✅ |
 | net8.0-windows  | ✅ |
 | net9.0-windows  | ✅ |
+| net10.0-windows  | ✅ |
 
 ### 欢迎关注微信公众号  
 

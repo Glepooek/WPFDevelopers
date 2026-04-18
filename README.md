@@ -21,7 +21,7 @@
 ### [码云](https://gitee.com/WPFDevelopersOrg) https://gitee.com/WPFDevelopersOrg  
 
 ### [ Wiki → Quick update in progress](https://github.com/WPFDevelopersOrg/WPFDevelopers/wiki)   
-###  Visual Studio 2022  
+###  Visual Studio Insiders  
 
 ### .Net Version
 |  .Net Version   | Status  |
@@ -45,6 +45,7 @@
 | net7.0-windows  | ✅ |
 | net8.0-windows  | ✅ |
 | net9.0-windows  | ✅ |
+| net10.0-windows  | ✅ |
 
 ### Donate
 If you think our open source software is helpful to you, please scan the QR code below and give us a cup of coffee.

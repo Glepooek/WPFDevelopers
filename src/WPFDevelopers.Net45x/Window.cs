@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shell;
 using WPFDevelopers.Controls;
 using WPFDevelopers.Core.Helpers;
 using WPFDevelopers.Helpers;
@@ -74,9 +75,18 @@ namespace WPFDevelopers.Net45x
         private void OnWindow_StateChanged(object sender, EventArgs e)
         {
             if (WindowState == WindowState.Maximized)
-                _windowChrome.GlassFrameThickness = new Thickness(0);
+            {
+                WindowChrome.SetWindowChrome(this, new WindowChrome
+                {
+                    CaptionHeight = 40,
+                    GlassFrameThickness = new Thickness(0),
+                    NonClientFrameEdges = NonClientFrameEdges.Right
+                });
+            }
             else
-                _windowChrome.GlassFrameThickness = new Thickness(0, 0, 0, 0.1);
+            {
+                WindowChrome.SetWindowChrome(this, _windowChrome);
+            }
         }
 
         private void Resources_ThemeChanged(ThemeType currentTheme)

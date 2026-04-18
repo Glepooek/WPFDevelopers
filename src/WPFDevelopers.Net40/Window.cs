@@ -1,5 +1,6 @@
 ﻿using Microsoft.Windows.Shell;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
@@ -34,6 +35,21 @@ namespace WPFDevelopers.Net40
         private IntPtr hWnd;
         private WindowChrome _windowChrome;
 
+        [StructLayout(LayoutKind.Sequential)]
+        struct NCCALCSIZE_PARAMS
+        {
+            public RECT rect0;
+            public RECT rect1;
+            public RECT rect2;
+            public IntPtr lppos;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct RECT
+        {
+            public int Left, Top, Right, Bottom;
+        }
+
         public static readonly DependencyProperty TitleHeightProperty =
             DependencyProperty.Register("TitleHeight", typeof(double), typeof(Window), new PropertyMetadata(50d, OnTitleHeightChanged));
 
@@ -66,18 +82,10 @@ namespace WPFDevelopers.Net40
             _windowChrome = new WindowChrome
             {
                 CaptionHeight = TitleHeight,
+                //ResizeBorderThickness = new Thickness(6),
                 GlassFrameThickness = new Thickness(0, 0, 0, 0.1),
             };
             WindowChrome.SetWindowChrome(this, _windowChrome);
-            StateChanged += OnWindow_StateChanged;
-        }
-
-        private void OnWindow_StateChanged(object sender, EventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-                _windowChrome.GlassFrameThickness = new Thickness(0);
-            else
-                _windowChrome.GlassFrameThickness = new Thickness(0, 0, 0, 0.1);
         }
 
         private void Resources_ThemeChanged(ThemeType currentTheme)
@@ -204,7 +212,6 @@ namespace WPFDevelopers.Net40
             SystemCommands.RestoreWindow(this);
         }
 
-
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             switch (msg)
@@ -225,6 +232,17 @@ namespace WPFDevelopers.Net40
                         if (WindowStyle.None != _windowStyle)
                             WindowStyle = _windowStyle;
                         handled = true;
+                    }
+                    break;
+                case WindowsMessageCodes.WM_NCCALCSIZE:
+                    if (wParam.ToInt32() == 1)
+                    {
+                        var nccalc = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(lParam, typeof(NCCALCSIZE_PARAMS));
+                        nccalc.rect0.Bottom -= 1;
+                        nccalc.rect0.Right -= 0;
+                        Marshal.StructureToPtr(nccalc, lParam, false);
+                        handled = true;
+                        return new IntPtr(0);
                     }
                     break;
                 #region SnapLayouts
